@@ -2,8 +2,9 @@ import { NextRequest } from 'next/server';
 import {
   DEFAULT_LLMS_TXT,
   LLMS_TXT_CONTENT_TYPE,
-  SiteResolver,
-} from '@sitecore-content-sdk/content/site';
+  getLlmsTxt,
+} from '@/lib/llms-txt';
+import { SiteResolver } from '@sitecore-content-sdk/content/site';
 import type { SiteInfo } from '@sitecore-content-sdk/nextjs';
 import sites from '.sitecore/sites.json';
 import client from 'lib/sitecore-client';
@@ -113,7 +114,7 @@ export async function GET(req: NextRequest) {
       language: site.language ?? 'en',
     }));
     const site = new SiteResolver(sitesNormalized).getByHost(hostName);
-    const content = await client.getLlmsTxt({ siteName: site.name });
+    const content = await getLlmsTxt(client, site.name);
 
     if (!content) {
       return new Response(DEFAULT_LLMS_TXT, {

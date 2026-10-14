@@ -3,7 +3,8 @@
  */
 import { JSX } from 'react';
 import Head from 'next/head';
-import { Placeholder, DesignLibrary, Page, PageMetaTags } from '@sitecore-content-sdk/nextjs';
+import { Placeholder, DesignLibrary, Page } from '@sitecore-content-sdk/nextjs';
+import { PageMetaTags } from '@/components/content-sdk/PageMetaTags';
 import Scripts from 'src/Scripts';
 import SitecoreStyles from 'src/components/content-sdk/SitecoreStyles';
 

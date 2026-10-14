@@ -8,7 +8,7 @@ const mockPage: Page = {
     isPreview: false,
     isNormal: true,
     name: 'normal' as PageMode['name'],
-    designLibrary: { isVariantGeneration: false },
+    designLibrary: { isVariantGeneration: false, isLowCode: false },
     isDesignLibrary: false,
   },
   layout: {

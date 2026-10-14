@@ -9,6 +9,7 @@ This repository contains multiple Next.js Starter Kits, and an Angular starter k
 - [Repository Overview](#repository-overview)
 - [Contributing](#contributing)
 - [How to Run a Next.js Starter Locally](#how-to-run-a-nextjs-starter-locally)
+- [Content Kit Atoms](#content-kit-atoms)
 - [How to Add an Editing Host to SitecoreAI](#how-to-add-an-editing-host-to-xm-cloud)
 - [GitHub Template](#github-template)
   - [Prerequisites](#prerequisites)
@@ -88,6 +89,51 @@ Use the **path for your chosen starter** (e.g. `examples/kit-nextjs-article-star
 4. Open **http://localhost:3000** and verify the site loads.
 
 > **Note:** For kit-specific details (editing host name, preconditions), see that starter’s [README](examples/kit-nextjs-article-starter/README.md#overview).
+
+## Content Kit Atoms
+
+All six Next.js rendering hosts, including `basic-nextjs-pages-router`, include
+the Content Kit **Button**, **Heading**, **Image**, **Number**, and **Paragraph**
+Atoms. The Angular starter is not included because this registry supplies React
+components.
+
+Each Next.js starter owns its independent installation:
+
+- `src/components/atoms/`: Atom components and their schema definitions.
+- `src/lib/atoms-utils.ts`: Shared field and styling helpers.
+- `src/atoms/catalog.ts`: All five definitions for the design library.
+- `src/atoms/registry.tsx`: Matching React renderers.
+
+The catalog and registry are passed to `SitecoreProvider` through `atomsConfig`.
+Atoms and schema files are excluded from Sitecore layout component-map generation;
+existing layout components and UI primitives remain unchanged.
+
+The installation uses the Content Kit registry's pinned Sitecore Atoms beta SDK:
+Next.js/React `3.0.0-beta.atoms.20260909151455`, supporting SDK packages
+`2.2.0-beta.atoms.20260909151455`, and CLI `2.3.0-beta.atoms.20260909151455`.
+Keep these versions aligned when upgrading.
+These SDK packages require Node.js 24 or newer.
+
+The App Router starters include local compatibility helpers in
+`src/lib/page-metadata.ts` and `src/lib/llms-txt.ts` because this beta does not
+include those stable SDK APIs. They preserve the existing metadata field
+mapping and authored llms.txt GraphQL query; request failures still reach the
+route's error handler.
+
+The Pages Router starter also supplies a local `PageMetaTags` compatibility
+component. The product-listing starter keeps autocomplete, preview results, and
+More Like This on the stable Search service through `src/lib/search-compat.ts`,
+since the Atoms beta's search hooks do not support those features.
+
+To reinstall from inside a Next.js starter:
+
+```bash
+npx shadcn@latest add https://content-kit.vercel.app/r/atoms.json
+```
+
+Review overwrite prompts before replacing locally customized Atoms. Use the
+combined registry item so all five catalog entries and renderers are retained.
+See [Content Kit](https://content-kit.vercel.app/atoms/button) for usage.
 
 ## How to Add an Editing Host to SitecoreAI
 

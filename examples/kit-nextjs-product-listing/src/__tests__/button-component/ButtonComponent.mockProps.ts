@@ -13,7 +13,7 @@ const mockPageNormal = {
     isNormal: true,
     isPreview: false,
     name: 'normal' as const,
-    designLibrary: { isVariantGeneration: false },
+    designLibrary: { isVariantGeneration: false, isLowCode: false },
     isDesignLibrary: false,
   },
   layout: {

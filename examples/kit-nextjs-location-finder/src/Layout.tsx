@@ -3,7 +3,6 @@ import {
   Field,
   ImageField,
   Page,
-  PageMetadataFields,
   AppPlaceholder,
 } from '@sitecore-content-sdk/nextjs';
 import Scripts from 'src/Scripts';
@@ -12,6 +11,7 @@ import { Sora, Roboto } from 'next/font/google';
 import SitecoreStyles from 'components/content-sdk/SitecoreStyles';
 import { DesignLibraryApp } from '@sitecore-content-sdk/nextjs';
 import componentMap from '.sitecore/component-map';
+import type { PageMetadataFields } from '@/lib/page-metadata';
 import {
   generateWebSiteSchema,
   generateOrganizationSchema,

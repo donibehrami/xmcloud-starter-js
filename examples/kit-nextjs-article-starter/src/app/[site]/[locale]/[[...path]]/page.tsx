@@ -2,7 +2,7 @@ import { isDesignLibraryPreviewData } from '@sitecore-content-sdk/nextjs/editing
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { draftMode, headers as nextHeaders } from 'next/headers';
-import { getPageMetadata } from '@sitecore-content-sdk/nextjs';
+import { getPageMetadata } from '@/lib/page-metadata';
 import { SiteInfo } from '@sitecore-content-sdk/nextjs';
 import sites from '.sitecore/sites.json';
 import { routing } from '@/i18n/routing';

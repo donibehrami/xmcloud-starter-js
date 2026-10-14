@@ -6,7 +6,6 @@ import {
   Field,
   ImageField,
   Page,
-  PageMetadataFields,
   AppPlaceholder,
 } from '@sitecore-content-sdk/nextjs';
 import Scripts from 'src/Scripts';
@@ -16,6 +15,7 @@ import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 import { DesignLibraryApp } from '@sitecore-content-sdk/nextjs';
 import componentMap from '.sitecore/component-map';
+import type { PageMetadataFields } from '@/lib/page-metadata';
 import { generateOrganizationSchema, generateWebSiteSchema } from 'src/lib/structured-data/schema';
 import { StructuredData } from 'src/components/structured-data/StructuredData';
 

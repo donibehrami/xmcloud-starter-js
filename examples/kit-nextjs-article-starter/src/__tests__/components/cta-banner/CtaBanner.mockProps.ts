@@ -9,7 +9,7 @@ const mockPageBase: Page = {
     isPreview: false,
     isNormal: true,
     name: 'normal' as PageMode['name'],
-    designLibrary: { isVariantGeneration: false },
+    designLibrary: { isVariantGeneration: false, isLowCode: false },
     isDesignLibrary: false,
   },
   layout: {
@@ -27,7 +27,7 @@ export const mockPageEditing: Page = {
     isPreview: false,
     isNormal: false,
     name: 'edit' as PageMode['name'],
-    designLibrary: { isVariantGeneration: false },
+    designLibrary: { isVariantGeneration: false, isLowCode: false },
     isDesignLibrary: false,
   },
   layout: {

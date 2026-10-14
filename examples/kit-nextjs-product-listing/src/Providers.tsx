@@ -8,6 +8,7 @@ import {
 } from '@sitecore-content-sdk/nextjs';
 import scConfig from 'sitecore.config';
 import components from '.sitecore/component-map.client';
+import { catalog, registry } from '@/atoms';
 import { ThemeProvider } from '@/components/theme-provider/theme-provider.dev';
 import { VideoProvider } from './contexts/VideoContext';
 
@@ -22,6 +23,7 @@ export default function Providers({
 }) {
   return (
     <SitecoreProvider
+      atomsConfig={{ catalog, registry }}
       api={scConfig.api}
       componentMap={components}
       page={page}

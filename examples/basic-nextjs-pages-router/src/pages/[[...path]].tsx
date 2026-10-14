@@ -14,6 +14,7 @@ import { extractPath, handleEditorFastRefresh } from '@sitecore-content-sdk/next
 import { isDesignLibraryPreviewData } from '@sitecore-content-sdk/nextjs/editing';
 import client from 'lib/sitecore-client';
 import components from '.sitecore/component-map';
+import { catalog, registry } from '@/atoms';
 import scConfig from 'sitecore.config';
 
 const SitecorePage = ({ page, notFound, componentProps }: SitecorePageProps): JSX.Element => {
@@ -30,6 +31,7 @@ const SitecorePage = ({ page, notFound, componentProps }: SitecorePageProps): JS
   return (
     <ComponentPropsContext value={componentProps || {}}>
       <SitecoreProvider
+        atomsConfig={{ catalog, registry }}
         componentMap={components}
         api={scConfig.api}
         page={page}

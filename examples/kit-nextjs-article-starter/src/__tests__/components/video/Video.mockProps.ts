@@ -16,7 +16,7 @@ const mockPage: Page = {
     isPreview: false,
     isNormal: true,
     isDesignLibrary: false,
-    designLibrary: { isVariantGeneration: false },
+    designLibrary: { isVariantGeneration: false, isLowCode: false },
   },
   layout: {
     sitecore: {

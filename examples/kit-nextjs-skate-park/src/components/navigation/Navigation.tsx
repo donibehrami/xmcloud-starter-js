@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, JSX } from 'react';
-import { LinkField, Text, TextField, useSitecore, FieldMetadata } from '@sitecore-content-sdk/nextjs';
+import { LinkField, Text, TextField, useSitecore } from '@sitecore-content-sdk/nextjs';
+import type { FieldMetadata } from '@sitecore-content-sdk/content/layout';
 import { CompatibleLink } from 'components/content-sdk/CompatibleLink';
 import { getFieldValue } from 'lib/component-props';
 import { NavigationFields as Fields, NavigationListItemProps, NavigationProps } from './navigation.props';

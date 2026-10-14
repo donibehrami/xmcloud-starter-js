@@ -5,6 +5,7 @@ import { GetStaticProps } from 'next';
 import scConfig from 'sitecore.config';
 import client from 'lib/sitecore-client';
 import components from '.sitecore/component-map';
+import { catalog, registry } from '@/atoms';
 import { JSX } from 'react';
 
 const Custom404 = (props: SitecorePageProps): JSX.Element => {
@@ -14,6 +15,7 @@ const Custom404 = (props: SitecorePageProps): JSX.Element => {
 
   return (
     <SitecoreProvider
+      atomsConfig={{ catalog, registry }}
       api={scConfig.api}
       componentMap={components}
       page={props.page}

@@ -11,7 +11,7 @@ export const mockPageNormal = {
     isNormal: true,
     isPreview: false,
     name: 'normal' as const,
-    designLibrary: { isVariantGeneration: false },
+    designLibrary: { isVariantGeneration: false, isLowCode: false },
     isDesignLibrary: false,
   },
   layout: {
@@ -32,7 +32,7 @@ export const mockPageEditing = {
     isNormal: false,
     isPreview: false,
     name: 'edit' as const,
-    designLibrary: { isVariantGeneration: false },
+    designLibrary: { isVariantGeneration: false, isLowCode: false },
     isDesignLibrary: false,
   },
   layout: {

@@ -18,7 +18,7 @@ const mockPageEditing = {
     isPreview: false,
     isNormal: false,
     name: 'edit' as const,
-    designLibrary: { isVariantGeneration: false },
+    designLibrary: { isVariantGeneration: false, isLowCode: false },
     isDesignLibrary: false,
   },
   layout: {
@@ -39,7 +39,7 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
         isPreview: false,
         isNormal: true,
         name: 'normal' as const,
-        designLibrary: { isVariantGeneration: false },
+        designLibrary: { isVariantGeneration: false, isLowCode: false },
         isDesignLibrary: false,
       },
       layout: {
@@ -212,7 +212,7 @@ describe('GlobalFooter Component', () => {
             isPreview: false,
             isNormal: true,
             name: 'normal' as const,
-            designLibrary: { isVariantGeneration: false },
+            designLibrary: { isVariantGeneration: false, isLowCode: false },
             isDesignLibrary: false,
           },
           layout: {

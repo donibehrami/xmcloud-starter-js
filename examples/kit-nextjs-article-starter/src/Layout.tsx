@@ -6,7 +6,6 @@ import {
   Page,
   Field,
   ImageField,
-  PageMetadataFields,
   AppPlaceholder,
   DesignLibraryApp,
 } from '@sitecore-content-sdk/nextjs';
@@ -14,6 +13,7 @@ import Scripts from '@/Scripts';
 import SitecoreStyles from '@/components/content-sdk/SitecoreStyles';
 import { Figtree } from 'next/font/google';
 import componentMap from '.sitecore/component-map';
+import type { PageMetadataFields } from '@/lib/page-metadata';
 import Providers from './Providers';
 
 const heading = Figtree({

@@ -7,7 +7,7 @@ const mockPageBase = {
     isPreview: false,
     isNormal: true,
     name: 'normal' as const,
-    designLibrary: { isVariantGeneration: false },
+    designLibrary: { isVariantGeneration: false, isLowCode: false },
     isDesignLibrary: false,
   },
   layout: {
@@ -25,7 +25,7 @@ const mockPageEditing = {
     isPreview: false,
     isNormal: false,
     name: 'edit' as const,
-    designLibrary: { isVariantGeneration: false },
+    designLibrary: { isVariantGeneration: false, isLowCode: false },
     isDesignLibrary: false,
   },
   layout: {

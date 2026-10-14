@@ -69,7 +69,7 @@ describe('ImageGallery Component', () => {
         isPreview: false,
         isNormal: false,
         name: 'edit' as const,
-        designLibrary: { isVariantGeneration: false },
+        designLibrary: { isVariantGeneration: false, isLowCode: false },
         isDesignLibrary: false,
       },
       layout: {

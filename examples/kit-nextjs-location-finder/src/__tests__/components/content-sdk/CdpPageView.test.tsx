@@ -65,6 +65,7 @@ describe('CdpPageView Component', () => {
         name: 'normal' as any,
         designLibrary: {
           isVariantGeneration: false,
+          isLowCode: false,
         },
         isDesignLibrary: false,
       },
@@ -124,6 +125,7 @@ describe('CdpPageView Component', () => {
             name: 'edit' as any,
             designLibrary: {
               isVariantGeneration: false,
+              isLowCode: false,
             },
             isDesignLibrary: false,
           },

@@ -3,13 +3,13 @@ import {
   Field,
   ImageField,
   Page,
-  PageMetadataFields,
   DesignLibraryApp,
 } from "@sitecore-content-sdk/nextjs";
 import Scripts from "src/Scripts";
 import SitecoreStyles from "components/content-sdk/SitecoreStyles";
 import { AppPlaceholder } from "@sitecore-content-sdk/nextjs";
 import componentMap from ".sitecore/component-map";
+import type { PageMetadataFields } from "@/lib/page-metadata";
 
 interface LayoutProps {
   page: Page;

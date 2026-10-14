@@ -36,7 +36,7 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
   withDatasourceCheck: () => (Component: React.ComponentType) => Component,
 }));
 
-jest.mock('@sitecore-content-sdk/nextjs/search', () => ({
+jest.mock('@/lib/search-compat', () => ({
   useSearch: (...args: unknown[]) => mockUseSearch(...args),
   useInfiniteSearch: (...args: unknown[]) => mockUseInfiniteSearch(...args),
   useSuggest: (...args: unknown[]) => mockUseSuggest(...args),

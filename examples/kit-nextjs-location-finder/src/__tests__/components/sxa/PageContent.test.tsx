@@ -56,7 +56,7 @@ describe('SXA PageContent', () => {
       isPreview: false,
       isNormal: true,
       name: 'normal' as const,
-      designLibrary: { isVariantGeneration: false },
+      designLibrary: { isVariantGeneration: false, isLowCode: false },
       isDesignLibrary: false,
     },
     layout: {
