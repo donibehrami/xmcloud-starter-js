@@ -11,8 +11,15 @@ import { Paragraph } from '@/components/atoms/paragraph/paragraph';
 jest.mock('@sitecore-feaas/clientside/react', () => ({}));
 
 describe('Content Kit Atoms', () => {
-  it('registers exactly the five installed Atoms in both wiring files', () => {
-    const names = ['Button', 'Heading', 'Image', 'Number', 'Paragraph'];
+  it('registers exactly the six installed Atoms in both wiring files', () => {
+    const names = [
+      'Button',
+      'Heading',
+      'Image',
+      'Layout',
+      'Number',
+      'Paragraph',
+    ];
     expect(catalog.componentNames.slice().sort()).toEqual(names);
     expect(Object.keys(registry.registry).sort()).toEqual(names);
   });

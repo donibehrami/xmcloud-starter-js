@@ -94,19 +94,36 @@ Use the **path for your chosen starter** (e.g. `examples/kit-nextjs-article-star
 
 All six Next.js rendering hosts, including `basic-nextjs-pages-router`, include
 the Content Kit **Button**, **Heading**, **Image**, **Number**, and **Paragraph**
-Atoms. The Angular starter is not included because this registry supplies React
+Atoms, plus a custom **Layout** parent container. The Angular starter is not included because this registry supplies React
 components.
 
 Each Next.js starter owns its independent installation:
 
 - `src/components/atoms/`: Atom components and their schema definitions.
 - `src/lib/atoms-utils.ts`: Shared field and styling helpers.
-- `src/atoms/catalog.ts`: All five definitions for the design library.
+- `src/atoms/catalog.ts`: All six definitions for the design library.
 - `src/atoms/registry.tsx`: Matching React renderers.
 
 The catalog and registry are passed to `SitecoreProvider` through `atomsConfig`.
 Atoms and schema files are excluded from Sitecore layout component-map generation;
 existing layout components and UI primitives remain unchanged.
+
+### Layout container
+
+Add **Layout** in the Atoms editor, then drop Button, Heading, Image, Number,
+Paragraph, or another Layout into its default child slot. Nested Layouts let you
+combine rows and columns. Layout is an Atom, not a Sitecore layout rendering.
+
+Editor controls:
+
+- **Direction:** `vertical` (default) or `horizontal` (a wrapping row).
+- **Gap:** `none`, `small`, `medium` (default), or `large`.
+- **Padding:** `none`, `small`, `medium` (default), or `large`.
+
+Spacing choices correspond to 0, 0.5rem, 1rem, and 2rem. An empty Layout keeps
+a minimum height of 3rem so it remains targetable in the editor. Application code
+can also import `Layout` from `@/components/atoms/layout/layout` and supply
+`children`, standard div attributes, and `className` overrides.
 
 The installation uses the Content Kit registry's pinned Sitecore Atoms beta SDK:
 Next.js/React `3.0.0-beta.atoms.20260909151455`, supporting SDK packages
@@ -133,6 +150,9 @@ npx shadcn@latest add https://content-kit.vercel.app/r/atoms.json
 
 Review overwrite prompts before replacing locally customized Atoms. Use the
 combined registry item so all five catalog entries and renderers are retained.
+The remote registry does not include the custom Layout Atom. If reinstalling,
+preserve its catalog entry, registry renderer, and schema barrel export when
+reviewing overwrite prompts.
 See [Content Kit](https://content-kit.vercel.app/atoms/button) for usage.
 
 ## How to Add an Editing Host to SitecoreAI
