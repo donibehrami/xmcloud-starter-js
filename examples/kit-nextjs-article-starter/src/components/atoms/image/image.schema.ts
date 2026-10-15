@@ -57,5 +57,7 @@ export const imageCatalogDefinition = {
     shape: 'rounded',
     aspectRatio: '16:9',
   },
-  slots: ['default'],
+  allowedParents: undefined,
+  allowedChildren: [],
+  slots: [],
 };

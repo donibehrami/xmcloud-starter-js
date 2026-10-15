@@ -68,6 +68,7 @@ export const paragraphCatalogDefinition = {
     },
     recommendedLength: 160,
   },
-  slots: ["default"],
-  allowedChildren: ["text"],
+  allowedParents: undefined,
+  allowedChildren: [],
+  slots: [],
 };

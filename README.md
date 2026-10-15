@@ -125,6 +125,26 @@ a minimum height of 3rem so it remains targetable in the editor. Application cod
 can also import `Layout` from `@/components/atoms/layout/layout` and supply
 `children`, standard div attributes, and `className` overrides.
 
+### Atom composition rules
+
+All six hosts use the same editor composition policy:
+
+| Atom | `allowedParents` | `allowedChildren` | `slots` |
+|------|------------------|-------------------|---------|
+| Layout | `undefined` | `undefined` | `['default']` |
+| Button, Heading, Image, Number, Paragraph | `undefined` | `[]` | `[]` |
+
+`undefined` means unrestricted; `[]` means none permitted. Layout therefore
+accepts existing and future child Atom types, including nested Layouts, without
+maintaining an allowlist. Parents remain unrestricted so these Atoms can also
+be used inside future containers.
+
+The five leaf Atoms use their content properties (`link`, `text`, `image`,
+`label`, or `body`) rather than editor child Atoms. These rules govern editor
+composition only: existing React `children` support is unchanged. Existing
+documents with children inside leaf Atoms should be reviewed when editing;
+this change does not migrate or remove their content.
+
 The installation uses the Content Kit registry's pinned Sitecore Atoms beta SDK:
 Next.js/React `3.0.0-beta.atoms.20260909151455`, supporting SDK packages
 `2.2.0-beta.atoms.20260909151455`, and CLI `2.3.0-beta.atoms.20260909151455`.

@@ -21,12 +21,6 @@ export const layoutCatalogDefinition = {
     'Category: Layout. Parent container for composing Atoms, including nested Layout containers.',
   example: { direction: 'vertical', gap: 'medium', padding: 'medium' },
   slots: ['default'],
-  allowedChildren: [
-    'Button',
-    'Heading',
-    'Image',
-    'Number',
-    'Paragraph',
-    'Layout',
-  ],
+  allowedParents: undefined,
+  allowedChildren: undefined,
 };

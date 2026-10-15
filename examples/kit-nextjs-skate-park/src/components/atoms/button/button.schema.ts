@@ -31,6 +31,7 @@ export const buttonCatalogDefinition = {
   example: {
     link: { value: { href: "/", text: "Get started" } },
   },
-  slots: ["default"],
-  allowedChildren: ["text"],
+  allowedParents: undefined,
+  allowedChildren: [],
+  slots: [],
 };

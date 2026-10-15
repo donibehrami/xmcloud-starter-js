@@ -26,6 +26,7 @@ export const headingCatalogDefinition = {
     variant: "h2",
     text: { value: "Build faster with Content Kit" },
   },
-  slots: ["default"],
-  allowedChildren: ["text"],
+  allowedParents: undefined,
+  allowedChildren: [],
+  slots: [],
 };

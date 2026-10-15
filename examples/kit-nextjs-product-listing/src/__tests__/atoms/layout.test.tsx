@@ -53,11 +53,10 @@ describe('Layout Atom', () => {
     expect(result.success).toBe(true);
   });
 
-  it('exposes a default drop slot that accepts every installed Atom and nested Layouts', () => {
+  it('exposes a default drop slot without restricting child or parent types', () => {
     expect(layoutCatalogDefinition.slots).toEqual(['default']);
-    expect(layoutCatalogDefinition.allowedChildren.slice().sort()).toEqual(
-      catalog.componentNames.slice().sort()
-    );
+    expect(layoutCatalogDefinition.allowedChildren).toBeUndefined();
+    expect(layoutCatalogDefinition.allowedParents).toBeUndefined();
     expect(registry.registry.Layout).toBeDefined();
   });
 

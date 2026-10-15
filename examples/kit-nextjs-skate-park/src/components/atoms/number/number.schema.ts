@@ -24,5 +24,7 @@ export const numberCatalogDefinition = {
     max: 99,
     decimalsAllowed: false,
   },
-  slots: ["default"],
+  allowedParents: undefined,
+  allowedChildren: [],
+  slots: [],
 };
