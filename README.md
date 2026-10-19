@@ -119,6 +119,25 @@ Editor controls:
 - **Direction:** `vertical` (default) or `horizontal` (a wrapping row).
 - **Gap:** `none`, `small`, `medium` (default), or `large`.
 - **Padding:** `none`, `small`, `medium` (default), or `large`.
+- **Columns:** optional integer from 1 to 6. Enables equal-width columns from
+  the `md` breakpoint (768px with the default Tailwind theme); columns stack on
+  mobile. In column mode this takes precedence over Direction.
+
+The SDK catalog has six fixed slots: `default` (column one), `column2`,
+`column3`, `column4`, `column5`, and `column6`. The editor always advertises all
+six; Columns controls the visible empty drop zones and desktop grid width,
+not the catalog's slot list. Existing Layouts without Columns retain their
+original flex behavior and default children.
+
+Default-slot content stays in the document's `children` array. Other column
+content uses the document's `slots` map, for example
+`slots: { column2: ['heading-id'] }`. Application code supplies rendered nodes
+through the corresponding `slots` prop. Do not use `slots.default`.
+
+Reducing Columns never hides populated extra slots: they remain in order in
+additional grid rows. Empty intermediate slots are preserved so content keeps
+its slot identity. If named-slot content exists without a Columns value, Layout
+uses a single-column grid to keep that content visible.
 
 Spacing choices correspond to 0, 0.5rem, 1rem, and 2rem. An empty Layout keeps
 a minimum height of 3rem so it remains targetable in the editor. Application code
@@ -131,7 +150,7 @@ All six hosts use the same editor composition policy:
 
 | Atom | `allowedParents` | `allowedChildren` | `slots` |
 |------|------------------|-------------------|---------|
-| Layout | `undefined` | `undefined` | `['default']` |
+| Layout | `undefined` | `undefined` | `['default', 'column2', 'column3', 'column4', 'column5', 'column6']` |
 | Button, Heading, Image, Number, Paragraph | `undefined` | `[]` | `[]` |
 
 `undefined` means unrestricted; `[]` means none permitted. Layout therefore

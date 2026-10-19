@@ -14,7 +14,11 @@ import { catalog } from './catalog';
 
 export const registry = defineAtomsRegistry(catalog, {
   components: {
-    Layout: ({ props, children }) => <Layout {...props}>{children}</Layout>,
+    Layout: ({ props, children, slots }) => (
+      <Layout {...props} slots={slots}>
+        {children}
+      </Layout>
+    ),
     Button: ({ props, children }) => <Button {...props}>{children}</Button>,
     Heading: ({ props, children }) => <Heading {...props}>{children}</Heading>,
     Paragraph: ({ props, children }) => (

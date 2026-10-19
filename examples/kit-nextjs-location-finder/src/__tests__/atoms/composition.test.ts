@@ -26,7 +26,11 @@ describe('Atom editor composition policies', () => {
       expect(definition.allowedChildren).toEqual(
         name === 'Layout' ? undefined : [],
       );
-      expect(definition.slots).toEqual(name === 'Layout' ? ['default'] : []);
+      expect(definition.slots).toEqual(
+        name === 'Layout'
+          ? ['default', 'column2', 'column3', 'column4', 'column5', 'column6']
+          : [],
+      );
     }
     expect(Object.keys(definitions)).toHaveLength(
       catalog.componentNames.length,

@@ -10,6 +10,74 @@ import { Button } from '@/components/atoms/button/button';
 jest.mock('@sitecore-feaas/clientside/react', () => ({}));
 
 describe('Layout Atom', () => {
+  it('validates a document with independently authored column content', () => {
+    expect(
+      catalog.validate({
+        root: 'layout',
+        elements: {
+          layout: {
+            type: 'Layout',
+            props: { columns: 2, direction: 'vertical', gap: 'medium', padding: 'medium' },
+            children: ['first'],
+            slots: { column2: ['second'] },
+          },
+          first: { type: 'Heading', props: { text: { value: 'First' } }, children: [] },
+          second: { type: 'Heading', props: { text: { value: 'Second' } }, children: [] },
+        },
+      }).success
+    ).toBe(true);
+  });
+
+  it.each([1, 2, 3, 4, 5, 6])('renders %i column drop zones stacked on mobile', (columns) => {
+    const { container } = render(<Layout columns={columns} />);
+    expect(container.querySelectorAll('[data-layout-slot]')).toHaveLength(columns);
+    expect(container.firstChild).toHaveClass('grid', 'grid-cols-1', `md:grid-cols-${columns}`);
+    expect(layoutCatalogDefinition.props.parse({ columns }).columns).toBe(columns);
+  });
+
+  it('preserves populated extra slots when the column count is reduced', () => {
+    const { container, rerender } = render(
+      <Layout columns={6} slots={{ column6: <Heading text="Keep me" /> }} />
+    );
+    rerender(<Layout columns={2} slots={{ column6: <Heading text="Keep me" /> }} />);
+    expect(container.firstChild).toHaveClass('md:grid-cols-2');
+    expect(screen.getByRole('heading', { name: 'Keep me' })).toBeInTheDocument();
+    expect(container.querySelectorAll('[data-layout-slot]')).toHaveLength(6);
+  });
+
+  it('forwards named slots through the registry and preserves the default children', () => {
+    const RegisteredLayout = registry.registry.Layout;
+    const { container } = render(
+      <RegisteredLayout
+        element={{ type: 'Layout', props: { columns: 2 }, children: [] }}
+        slots={{ column2: <Heading text="Second column" /> }}
+        emit={jest.fn()}
+        on={() => ({
+          shouldPreventDefault: false,
+          bound: false,
+          emit: jest.fn(),
+        })}
+      >
+        <Button>First column</Button>
+      </RegisteredLayout>
+    );
+    expect(container.querySelector('[data-layout-slot="default"]')).toContainElement(
+      screen.getByRole('button')
+    );
+    expect(container.querySelector('[data-layout-slot="column2"]')).toContainElement(
+      screen.getByRole('heading')
+    );
+  });
+
+  it('does not lose named slot content in legacy flex mode', () => {
+    render(<Layout slots={{ column3: <Heading text="Named content" /> }} />);
+    expect(screen.getByRole('heading')).toHaveTextContent('Named content');
+  });
+
+  it.each([0, 7, 1.5, '2'])('rejects invalid column count %s', (columns) => {
+    expect(layoutCatalogDefinition.props.safeParse({ columns }).success).toBe(false);
+  });
+
   it('passes editor props and children through the registered renderer', () => {
     const RegisteredLayout = registry.registry.Layout;
     const { container } = render(
@@ -20,7 +88,11 @@ describe('Layout Atom', () => {
           children: [],
         }}
         emit={jest.fn()}
-        on={() => ({ shouldPreventDefault: false, bound: false, emit: jest.fn() })}
+        on={() => ({
+          shouldPreventDefault: false,
+          bound: false,
+          emit: jest.fn(),
+        })}
       >
         <Heading text="Registered child" />
       </RegisteredLayout>
@@ -54,7 +126,14 @@ describe('Layout Atom', () => {
   });
 
   it('exposes a default drop slot without restricting child or parent types', () => {
-    expect(layoutCatalogDefinition.slots).toEqual(['default']);
+    expect(layoutCatalogDefinition.slots).toEqual([
+      'default',
+      'column2',
+      'column3',
+      'column4',
+      'column5',
+      'column6',
+    ]);
     expect(layoutCatalogDefinition.allowedChildren).toBeUndefined();
     expect(layoutCatalogDefinition.allowedParents).toBeUndefined();
     expect(registry.registry.Layout).toBeDefined();
