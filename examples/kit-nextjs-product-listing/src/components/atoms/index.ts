@@ -4,3 +4,4 @@ export { paragraphCatalogDefinition } from './paragraph/paragraph.schema';
 export { imageCatalogDefinition } from './image/image.schema';
 export { numberCatalogDefinition } from './number/number.schema';
 export { layoutCatalogDefinition } from './layout/layout.schema';
+export { superLayoutCatalogDefinition } from './super-layout/super-layout.schema';
