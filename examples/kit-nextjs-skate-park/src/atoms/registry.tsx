@@ -7,18 +7,12 @@ import { Heading } from "@/components/atoms/heading/heading";
 import { Image } from "@/components/atoms/image/image";
 import { NumericInput } from "@/components/atoms/number/number";
 import { Paragraph } from "@/components/atoms/paragraph/paragraph";
-import { Layout } from "@/components/atoms/layout/layout";
 import { Container } from "@/components/atoms/container/container";
 
 import { catalog } from "./catalog";
 
 export const registry = defineAtomsRegistry(catalog, {
   components: {
-    Layout: ({ props, children, slots }) => (
-      <Layout {...props} slots={slots}>
-        {children}
-      </Layout>
-    ),
     Container: ({ props, children }) => (
       <Container {...props}>{children}</Container>
     ),

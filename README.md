@@ -94,7 +94,7 @@ Use the **path for your chosen starter** (e.g. `examples/kit-nextjs-article-star
 
 All six Next.js rendering hosts, including `basic-nextjs-pages-router`, include
 the Content Kit **Button**, **Heading**, **Image**, **Number**, and **Paragraph**
-Atoms, plus a custom **Layout** parent container. The Angular starter is not included because this registry supplies React
+Atoms, plus a custom **Container** parent Atom. The Angular starter is not included because this registry supplies React
 components.
 
 Each Next.js starter owns its independent installation:
@@ -108,41 +108,32 @@ The catalog and registry are passed to `SitecoreProvider` through `atomsConfig`.
 Atoms and schema files are excluded from Sitecore layout component-map generation;
 existing layout components and UI primitives remain unchanged.
 
-### Layout container
+### Container Atom
 
-Add **Layout** in the Atoms editor, then drop Button, Heading, Image, Number,
-Paragraph, or another Layout into its default child slot. Nested Layouts let you
-combine rows and columns. Layout is an Atom, not a Sitecore layout rendering.
+Add **Container** in the Atoms editor, then drop Button, Heading, Image, Number,
+Paragraph, or another Container into its default child slot. Nested Containers
+let you combine rows and columns. Container is an Atom, not a Sitecore layout
+rendering.
 
-Editor controls:
+Configure its flex layout through `breakpoints`. Only the first entry is
+currently used at all viewport widths:
 
-- **Direction:** `vertical` (default) or `horizontal` (a wrapping row).
-- **Gap:** `none`, `small`, `medium` (default), or `large`.
-- **Padding:** `none`, `small`, `medium` (default), or `large`.
-- **Columns:** optional integer from 1 to 6. Enables equal-width columns from
-  the `md` breakpoint (768px with the default Tailwind theme); columns stack on
-  mobile. In column mode this takes precedence over Direction.
+- **Direction:** `row` or `column`; the renderer uses `row` when omitted.
+- **Columns:** an integer from 1 to 12 for equal-width columns, or an array of
+  explicit CSS widths. Applies only in row direction.
+- **Gap, padding, and margin:** CSS values such as `1rem` or `8px 16px`.
+- **Appearance:** optional background, border, width, height, and opacity.
+  The schema does not assign default values.
 
-The SDK catalog has six fixed slots: `default` (column one), `column2`,
-`column3`, `column4`, `column5`, and `column6`. The editor always advertises all
-six; Columns controls the visible empty drop zones and desktop grid width,
-not the catalog's slot list. Existing Layouts without Columns retain their
-original flex behavior and default children.
+The catalog exposes a single `default` slot. Its content stays in the document's
+`children` array. Application code can also import `Container` from
+`@/components/atoms/container/container` and supply `children`, standard div
+attributes, and `className` overrides.
 
-Default-slot content stays in the document's `children` array. Other column
-content uses the document's `slots` map, for example
-`slots: { column2: ['heading-id'] }`. Application code supplies rendered nodes
-through the corresponding `slots` prop. Do not use `slots.default`.
-
-Reducing Columns never hides populated extra slots: they remain in order in
-additional grid rows. Empty intermediate slots are preserved so content keeps
-its slot identity. If named-slot content exists without a Columns value, Layout
-uses a single-column grid to keep that content visible.
-
-Spacing choices correspond to 0, 0.5rem, 1rem, and 2rem. An empty Layout keeps
-a minimum height of 3rem so it remains targetable in the editor. Application code
-can also import `Layout` from `@/components/atoms/layout/layout` and supply
-`children`, standard div attributes, and `className` overrides.
+The former Layout Atom is no longer registered. Existing documents that use it
+must be updated to use Container, including converting named column slots into
+nested Containers and adapting their props. This change does not automatically
+migrate saved content.
 
 ### Atom composition rules
 
@@ -150,11 +141,11 @@ All six hosts use the same editor composition policy:
 
 | Atom | `allowedParents` | `allowedChildren` | `slots` |
 |------|------------------|-------------------|---------|
-| Layout | `undefined` | `undefined` | `['default', 'column2', 'column3', 'column4', 'column5', 'column6']` |
+| Container | `undefined` | `undefined` | `['default']` |
 | Button, Heading, Image, Number, Paragraph | `undefined` | `[]` | `[]` |
 
-`undefined` means unrestricted; `[]` means none permitted. Layout therefore
-accepts existing and future child Atom types, including nested Layouts, without
+`undefined` means unrestricted; `[]` means none permitted. Container therefore
+accepts existing and future child Atom types, including nested Containers, without
 maintaining an allowlist. Parents remain unrestricted so these Atoms can also
 be used inside future containers.
 
@@ -189,7 +180,7 @@ npx shadcn@latest add https://content-kit.vercel.app/r/atoms.json
 
 Review overwrite prompts before replacing locally customized Atoms. Use the
 combined registry item so all five catalog entries and renderers are retained.
-The remote registry does not include the custom Layout Atom. If reinstalling,
+The remote registry does not include the custom Container Atom. If reinstalling,
 preserve its catalog entry, registry renderer, and schema barrel export when
 reviewing overwrite prompts.
 See [Content Kit](https://content-kit.vercel.app/atoms/button) for usage.
