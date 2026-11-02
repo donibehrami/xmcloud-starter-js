@@ -13,7 +13,9 @@ describe('Atom editor composition policies', () => {
 
   it.each(
     Object.entries(definitions).filter(
-      ([name]) => name !== 'layoutCatalogDefinition',
+      ([name]) =>
+        name !== 'layoutCatalogDefinition' &&
+        name !== 'containerCatalogDefinition',
     ),
   )('%s is an editor leaf with no child drop slots', (_, definition) => {
     expect(definition.allowedChildren).toEqual([]);
@@ -24,12 +26,14 @@ describe('Atom editor composition policies', () => {
     for (const [name, definition] of Object.entries(catalog.data.components)) {
       expect(definition.allowedParents).toBeUndefined();
       expect(definition.allowedChildren).toEqual(
-        name === 'Layout' ? undefined : [],
+        name === 'Layout' || name === 'Container' ? undefined : [],
       );
       expect(definition.slots).toEqual(
         name === 'Layout'
           ? ['default', 'column2', 'column3', 'column4', 'column5', 'column6']
-          : [],
+          : name === 'Container'
+            ? ['default']
+            : [],
       );
     }
     expect(Object.keys(definitions)).toHaveLength(

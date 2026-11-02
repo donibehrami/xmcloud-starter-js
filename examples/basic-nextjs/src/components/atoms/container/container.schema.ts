@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const superLayoutBackgroundSchema = z.object({
+export const containerBackgroundSchema = z.object({
   color: z
     .string()
     .describe(
@@ -28,7 +28,7 @@ export const superLayoutBackgroundSchema = z.object({
     .optional(),
 });
 
-export const superLayoutBorderSchema = z.object({
+export const containerBorderSchema = z.object({
   width: z
     .string()
     .describe('CSS border-width value (e.g. "1px", "2px").')
@@ -59,7 +59,7 @@ export const superLayoutBorderSchema = z.object({
     .optional(),
 });
 
-export const superLayoutBreakpointSchema = z.object({
+export const containerBreakpointSchema = z.object({
   className: z
     .string()
     .describe("Additional CSS class name(s) applied to the container.")
@@ -119,21 +119,21 @@ export const superLayoutBreakpointSchema = z.object({
   width: z
     .string()
     .describe(
-      'Explicit width for this container as a flex item (e.g. "50%", "300px"), useful when nesting it as a column inside a parent SuperLayout.',
+      'Explicit width for this container as a flex item (e.g. "50%", "300px"), useful when nesting it as a column inside a parent Container.',
     )
     .optional(),
   height: z
     .string()
     .describe(
-      'Explicit height for this container as a flex item (e.g. "50%", "300px"), useful when nesting it as a row inside a parent SuperLayout.',
+      'Explicit height for this container as a flex item (e.g. "50%", "300px"), useful when nesting it as a row inside a parent Container.',
     )
     .optional(),
-  background: superLayoutBackgroundSchema
+  background: containerBackgroundSchema
     .describe(
       "Container background (color/image/position/size/repeat/attachment).",
     )
     .optional(),
-  border: superLayoutBorderSchema
+  border: containerBorderSchema
     .describe("Container border (width/style/color/radius).")
     .optional(),
   opacity: z
@@ -146,17 +146,17 @@ export const superLayoutBreakpointSchema = z.object({
     .optional(),
 });
 
-export const superLayoutCatalogDefinition = {
+export const containerCatalogDefinition = {
   props: z.object({
     breakpoints: z
-      .array(superLayoutBreakpointSchema)
+      .array(containerBreakpointSchema)
       .describe(
         "Layout definitions. Only the first entry is currently used and applies at all viewport widths. Provide one entry; the array is retained for future responsive breakpoint support.",
       )
       .optional(),
   }),
   description:
-    "Category: Layout. Standard component layout container: a flex wrapper configured via the first entry in `breakpoints`. Supports column counts in row direction, natural stacking in column direction, and CSS gap values. Can nest other SuperLayout instances as rows/columns for complex layouts.",
+    "Category: Layout. Standard component layout container: a flex wrapper configured via the first entry in `breakpoints`. Supports column counts in row direction, natural stacking in column direction, and CSS gap values. Can nest other Container instances as rows/columns for complex layouts.",
   example: { breakpoints: [{ columns: 2, gap: "1rem" }] },
   slots: ["default"],
   allowedParents: undefined,

@@ -1,11 +1,11 @@
 import { useId, type CSSProperties } from 'react';
 import { cn } from '@/lib/atoms-utils';
 import type {
-  SuperLayoutBackground,
-  SuperLayoutBorder,
-  SuperLayoutBreakpoint,
-  SuperLayoutProps,
-} from './super-layout.props';
+  ContainerBackground,
+  ContainerBorder,
+  ContainerBreakpoint,
+  ContainerProps,
+} from './container.props';
 
 // Gap keywords can't take part in calc(), so column sizing skips the gap deduction for them.
 const GAP_KEYWORDS = new Set(['normal', 'initial', 'unset', 'inherit', 'revert', 'revert-layer']);
@@ -67,7 +67,7 @@ const buildColumnRules = (
   });
 };
 
-const buildBackgroundStyle = (background?: SuperLayoutBackground): CSSProperties => ({
+const buildBackgroundStyle = (background?: ContainerBackground): CSSProperties => ({
   backgroundColor: background?.color,
   backgroundImage: background?.image ? toCssUrl(background.image) : undefined,
   backgroundPosition: background?.position,
@@ -76,7 +76,7 @@ const buildBackgroundStyle = (background?: SuperLayoutBackground): CSSProperties
   backgroundAttachment: background?.attachment as CSSProperties['backgroundAttachment'],
 });
 
-const buildBorderStyle = (border?: SuperLayoutBorder): CSSProperties => ({
+const buildBorderStyle = (border?: ContainerBorder): CSSProperties => ({
   borderWidth: border?.width,
   borderStyle: border?.style,
   borderColor: border?.color,
@@ -96,7 +96,7 @@ const buildContainerStyle = ({
   opacity,
   background,
   border,
-}: SuperLayoutBreakpoint): CSSProperties => ({
+}: ContainerBreakpoint): CSSProperties => ({
   display: 'flex',
   flexDirection: direction,
   flexWrap: wrap,
@@ -112,14 +112,14 @@ const buildContainerStyle = ({
   ...buildBorderStyle(border),
 });
 
-export function SuperLayout({
+export function Container({
   breakpoints,
   className,
   style,
   children,
   ...rest
-}: SuperLayoutProps) {
-  const scopeClass = `sc-super-layout-${useId().replace(/[^a-zA-Z0-9-]/g, '')}`;
+}: ContainerProps) {
+  const scopeClass = `sc-container-${useId().replace(/[^a-zA-Z0-9-]/g, '')}`;
   // Only the first entry is used until responsive breakpoints are supported.
   const layout = breakpoints?.[0] ?? {};
   const { columns, direction = 'row', gap } = layout;
@@ -134,8 +134,8 @@ export function SuperLayout({
       {columnsCss ? <style>{columnsCss}</style> : null}
       <div
         {...rest}
-        data-slot="super-layout"
-        className={cn('sc-super-layout', scopeClass, layout.className, className)}
+        data-slot="container"
+        className={cn('sc-container', scopeClass, layout.className, className)}
         style={{ ...buildContainerStyle(layout), ...style }}
       >
         {children}

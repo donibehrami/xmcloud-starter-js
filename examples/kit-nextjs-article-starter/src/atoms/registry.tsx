@@ -9,7 +9,7 @@ import { NumericInput } from '@/components/atoms/number/number';
 import { Paragraph } from '@/components/atoms/paragraph/paragraph';
 
 import { Layout } from '@/components/atoms/layout/layout';
-import { SuperLayout } from '@/components/atoms/super-layout/super-layout';
+import { Container } from '@/components/atoms/container/container';
 
 import { catalog } from './catalog';
 
@@ -20,8 +20,8 @@ export const registry = defineAtomsRegistry(catalog, {
         {children}
       </Layout>
     ),
-    SuperLayout: ({ props, children }) => (
-      <SuperLayout {...props}>{children}</SuperLayout>
+    Container: ({ props, children }) => (
+      <Container {...props}>{children}</Container>
     ),
     Button: ({ props, children }) => <Button {...props}>{children}</Button>,
     Heading: ({ props, children }) => <Heading {...props}>{children}</Heading>,

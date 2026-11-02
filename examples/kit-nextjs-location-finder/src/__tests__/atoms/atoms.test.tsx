@@ -3,6 +3,7 @@ import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { catalog, registry } from '@/atoms';
 import { Button } from '@/components/atoms/button/button';
+import { Container } from '@/components/atoms/container/container';
 import { Heading } from '@/components/atoms/heading/heading';
 import { Image } from '@/components/atoms/image/image';
 import { NumericInput } from '@/components/atoms/number/number';
@@ -11,10 +12,70 @@ import { Paragraph } from '@/components/atoms/paragraph/paragraph';
 jest.mock('@sitecore-feaas/clientside/react', () => ({}));
 
 describe('Content Kit Atoms', () => {
-  it('registers exactly the six installed Atoms in both wiring files', () => {
-    const names = ['Button', 'Heading', 'Image', 'Layout', 'Number', 'Paragraph'];
+  it('registers exactly the seven installed Atoms in both wiring files', () => {
+    const names = [
+      'Button',
+      'Container',
+      'Heading',
+      'Image',
+      'Layout',
+      'Number',
+      'Paragraph',
+    ];
     expect(catalog.componentNames.slice().sort()).toEqual(names);
     expect(Object.keys(registry.registry).sort()).toEqual(names);
+  });
+
+  it('renders Container children without requiring layout configuration', () => {
+    const { container } = render(
+      <Container data-testid="wrapper">
+        <span>Content</span>
+      </Container>,
+    );
+    expect(screen.getByTestId('wrapper')).toHaveAttribute(
+      'data-slot',
+      'container',
+    );
+    expect(screen.getByTestId('wrapper')).toHaveClass('sc-container');
+    expect(screen.getByTestId('wrapper')).toHaveStyle({
+      display: 'flex',
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+    });
+    expect(screen.getByText('Content')).toBeInTheDocument();
+    expect(container.querySelector('style')).toBeNull();
+  });
+
+  it('keeps Container column rules scoped and uses only the first breakpoint', () => {
+    const { container } = render(
+      <Container
+        data-testid="wrapper"
+        className="custom"
+        style={{ margin: '3px' }}
+        breakpoints={[
+          { columns: 2, gap: '1rem', padding: '2rem', className: 'authored' },
+          { direction: 'column' },
+        ]}
+      >
+        <span>First</span>
+        <span>Second</span>
+      </Container>,
+    );
+    const wrapper = screen.getByTestId('wrapper');
+    const scopeClass = Array.from(wrapper.classList).find((name) =>
+      name.startsWith('sc-container-'),
+    );
+    expect(scopeClass).toBeDefined();
+    expect(wrapper).toHaveClass('sc-container', 'custom', 'authored');
+    expect(wrapper).toHaveStyle({
+      flexDirection: 'row',
+      gap: '1rem',
+      padding: '2rem',
+      margin: '3px',
+    });
+    expect(container.querySelector('style')).toHaveTextContent(
+      `.${scopeClass} > * { flex: 0 0 calc((100% - 1 * 1rem) / 2) !important;`,
+    );
   });
 
   it('renders an action button and invokes its click handler', () => {
