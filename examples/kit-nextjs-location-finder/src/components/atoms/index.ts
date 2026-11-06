@@ -4,3 +4,7 @@ export { paragraphCatalogDefinition } from './paragraph/paragraph.schema';
 export { imageCatalogDefinition } from './image/image.schema';
 export { numberCatalogDefinition } from './number/number.schema';
 export { containerCatalogDefinition } from './container/container.schema';
+export { cardCatalogDefinition } from './card/card.schema';
+export { cardTitleCatalogDefinition } from './card-title/card-title.schema';
+export { cardContentCatalogDefinition } from './card-content/card-content.schema';
+export { cardFooterCatalogDefinition } from './card-footer/card-footer.schema';
