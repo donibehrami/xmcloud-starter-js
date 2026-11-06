@@ -7,22 +7,30 @@ import {
 } from '@sitecore-content-sdk/nextjs/codegen';
 // end of built-in imports
 
-import { jsx, Fragment } from 'react/jsx-runtime';
+import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
 import { Placeholder, CdpHelper, useSitecore } from '@sitecore-content-sdk/nextjs';
 import Head from 'next/head';
 import client from 'lib/sitecore-client';
 import Image from 'next/image';
 import * as FEAAS from '@sitecore-feaas/clientside/react';
 import nextConfig from 'next.config';
-import { useEffect } from 'react';
+import { useEffect, isValidElement, createElement, useId } from 'react';
+import * as React from 'react';
 import { pageView } from '@sitecore-content-sdk/events';
 import config from 'sitecore.config';
+import { cn, getRichTextFieldValue, getTextFieldValue, getImageFieldValue, getLinkFieldValue } from '@/lib/atoms-utils';
+import { PARAGRAPH_DEFAULT_RICH_TEXT_FEATURES, getParagraphPlainTextLength, isParagraphHtmlEmpty, sanitizeParagraphHtml, PARAGRAPH_RICH_TEXT_FEATURES } from 'src/components/atoms/paragraph/paragraph-rich-text';
+import { richTextFieldSchema, withPropMeta, textFieldSchema, imageFieldSchema, linkFieldSchema } from '@sitecore-content-sdk/nextjs/atoms';
+import { z } from 'zod';
+import { HEADING_ATOM_DEFAULT_LEVEL } from 'src/components/atoms/heading/heading';
+import Link from 'next/link';
 
 const importMap = [
   {
     module: 'react/jsx-runtime',
     exports: [
       { name: 'jsx', value: jsx },
+      { name: 'jsxs', value: jsxs },
       { name: 'Fragment', value: Fragment },
     ]
   },
@@ -68,6 +76,10 @@ const importMap = [
     module: 'react',
     exports: [
       { name: 'useEffect', value: useEffect },
+      { name: 'isValidElement', value: isValidElement },
+      { name: 'createElement', value: createElement },
+      { name: 'useId', value: useId },
+      { name: '*', value: React },
     ]
   },
   {
@@ -80,6 +92,54 @@ const importMap = [
     module: 'sitecore.config',
     exports: [
       { name: 'default', value: config },
+    ]
+  },
+  {
+    module: '@/lib/atoms-utils',
+    exports: [
+      { name: 'cn', value: cn },
+      { name: 'getRichTextFieldValue', value: getRichTextFieldValue },
+      { name: 'getTextFieldValue', value: getTextFieldValue },
+      { name: 'getImageFieldValue', value: getImageFieldValue },
+      { name: 'getLinkFieldValue', value: getLinkFieldValue },
+    ]
+  },
+  {
+    module: 'src/components/atoms/paragraph/paragraph-rich-text',
+    exports: [
+      { name: 'PARAGRAPH_DEFAULT_RICH_TEXT_FEATURES', value: PARAGRAPH_DEFAULT_RICH_TEXT_FEATURES },
+      { name: 'getParagraphPlainTextLength', value: getParagraphPlainTextLength },
+      { name: 'isParagraphHtmlEmpty', value: isParagraphHtmlEmpty },
+      { name: 'sanitizeParagraphHtml', value: sanitizeParagraphHtml },
+      { name: 'PARAGRAPH_RICH_TEXT_FEATURES', value: PARAGRAPH_RICH_TEXT_FEATURES },
+    ]
+  },
+  {
+    module: '@sitecore-content-sdk/nextjs/atoms',
+    exports: [
+      { name: 'richTextFieldSchema', value: richTextFieldSchema },
+      { name: 'withPropMeta', value: withPropMeta },
+      { name: 'textFieldSchema', value: textFieldSchema },
+      { name: 'imageFieldSchema', value: imageFieldSchema },
+      { name: 'linkFieldSchema', value: linkFieldSchema },
+    ]
+  },
+  {
+    module: 'zod',
+    exports: [
+      { name: 'z', value: z },
+    ]
+  },
+  {
+    module: 'src/components/atoms/heading/heading',
+    exports: [
+      { name: 'HEADING_ATOM_DEFAULT_LEVEL', value: HEADING_ATOM_DEFAULT_LEVEL },
+    ]
+  },
+  {
+    module: 'next/link',
+    exports: [
+      { name: 'default', value: Link },
     ]
   }
 ] as ImportEntry[];
