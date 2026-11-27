@@ -5,6 +5,7 @@ import {
   ComponentPropsContext,
   Page,
   SitecoreProvider,
+  ThemePreviewEvents,
 } from "@sitecore-content-sdk/nextjs";
 import scConfig from "sitecore.config";
 import components from ".sitecore/component-map.client";
@@ -23,10 +24,12 @@ export default function Providers({
     <SitecoreProvider
       atomsConfig={{ catalog, registry }}
       api={scConfig.api}
+      theming={scConfig.theming}
       componentMap={components}
       page={page}
       loadImportMap={() => import(".sitecore/import-map.client")}
     >
+      <ThemePreviewEvents />
       <ComponentPropsContext value={componentProps}>
         {children}
       </ComponentPropsContext>
